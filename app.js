@@ -4,12 +4,26 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser')
-
+var config = require('./config');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var cors = require('cors')
 
 var app = express();
+
+
+// console.log(config.mongoUri)
+// mongoose.connect(config.mongoUri);
+// if(isProduction){
+//     mongoose.set('debug', true);
+// }
+
+// MONGO
+// var mongoose = require('mongoose');
+// require('./models/User');
+// require('./models/Group');
+// require('./models/Transaction');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
