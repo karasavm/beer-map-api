@@ -77,12 +77,12 @@ router.get('/generate', function(req, res, next) {
 
         for (let i=0; i < beers.length; i++) {
             let tokens = [];
-            console.log(i)
+            console.log(i);
             try {
                 for (let j=0; j < 50; j++) {
                     tokens.push(
                         {
-                            token: uuidv1(),
+                            token: 'beer'+i.toString()+'id'+j.toString(),
                             used: false
                         });
                 }
