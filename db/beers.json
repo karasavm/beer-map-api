@@ -1,18 +1,22 @@
 [
 
-  {"id": "0", "name": "Beer 0"},
-  {"id": "1", "name": "Beer 1"},
-  {"id": "2", "name": "Beer 2"},
-  {"id": "3", "name": "Beer 3"},
-  {"id": "4", "name": "Beer 4"},
-  {"id": "5", "name": "Beer 5"},
-  {"id": "6", "name": "Beer 6"},
-  {"id": "7", "name": "Beer 7"},
-  {"id": "8", "name": "Beer 8"},
-  {"id": "9", "name": "Beer 9"},
-  {"id": "10", "name": "Beer 10"},
-  {"id": "11", "name": "Beer 11"},
-  {"id": "12", "name": "Beer 12"},
-  {"id": "13", "name": "Beer 13"},
-  {"id": "14", "name": "Beer 14"}
+  {"id": "0", "name": "Eza Lager", "brewId": "1"},
+  {"id": "1", "name": "Eza Pills", "brewId": "1"},
+  {"id": "2", "name": "Eza Blonde", "brewId": "1"},
+
+  {"id": "3", "name": "Vergina Lager", "brewId": "2"},
+  {"id": "4", "name": "Vergina Weise", "brewId": "2"},
+
+  {"id": "5", "name": "Septem One", "brewId": "3"},
+  {"id": "6", "name": "Septem Two", "brewId": "3"},
+  {"id": "7", "name": "Septem Three", "brewId": "3"},
+
+  {"id": "8", "name": "Corfu Red", "brewId": "4"},
+  {"id": "9", "name": "Corfu Lager", "brewId": "4"},
+  {"id": "10", "name": "Corfu Black", "brewId": "4"},
+
+  {"id": "11", "name": "Zeos Black", "brewId": "5"},
+  {"id": "12", "name": "Zeos Lager", "brewId": "5"},
+  {"id": "13", "name": "Zeos Red", "brewId": "5"},
+  {"id": "14", "name": "Zeos Pills", "brewId": "5"}
 ]
