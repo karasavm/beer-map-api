@@ -56,17 +56,26 @@ router.get('/beers', function(req, res, next) {
     });
 });
 
-router.get('/generate', function(req, res, next) {
+router.post('/generate', function(req, res, next) {
 
     fs.readFile('./db/beers.json', 'utf8', function (err, data) {
         if (err) throw err;
-        beers = JSON.parse(data);
+        const beers = JSON.parse(data);
 
-        let results = {};
-
+        let existedTokens = fs.readdirSync('./db/tokens/');
+        let results = [];
         for (let i=0; i < beers.length; i++) {
+            let fname = beers[i].id.toString()+ ".json";
+
+
+            // if exists continue
+            if (existedTokens.indexOf(fname) !== -1) {
+                continue;
+            }
+            console.log(fname);
+
             let tokens = [];
-            console.log(i);
+
             try {
                 for (let j=0; j < 50; j++) {
                     tokens.push(
@@ -75,27 +84,25 @@ router.get('/generate', function(req, res, next) {
                             used: false
                         });
                 }
-                let fname = "./db/tokens/" + beers[i].id.toString()+ ".json";
-
-                fs.writeFileSync(fname, JSON.stringify(tokens), 'utf-8');
+                results[beers[i].id] = tokens;
+                let path = "./db/tokens/" + fname;
+                console.log("write file with tokens", path);
+                fs.writeFileSync(path, JSON.stringify(tokens), 'utf-8');
             } catch (e) {
-                console.log(e)
+                console.log("unable to write fiel", e);
             }
         }
-        res.send('ok')
+        res.json(results);
     });
 
 });
 
 // checked
 router.get('/tokens/:beerId', function (req, res, next) {
-
     fs.readFile('./db/tokens/'+req.params.beerId + '.json', 'utf8', function (err, data) {
         if (err) {res.status(404).json({error: "there is no such beer: " + req.params.beerId}); return;}
         let tokens = JSON.parse(data);
-
         res.json({tokens: tokens})
-
     });
 });
 
