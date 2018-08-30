@@ -23,6 +23,7 @@ coverage
 
 db/results/*
 db/tokens/*
+db/resetTheTokens/*
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt

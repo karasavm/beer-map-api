@@ -56,6 +56,7 @@ router.get('/beers', function(req, res, next) {
     });
 });
 
+//checked
 router.post('/generate', function(req, res, next) {
 
     fs.readFile('./db/beers.json', 'utf8', function (err, data) {
@@ -77,17 +78,28 @@ router.post('/generate', function(req, res, next) {
             let tokens = [];
 
             try {
-                for (let j=0; j < 50; j++) {
+                for (let j=0; j < 2000; j++) {
                     tokens.push(
                         {
-                            token: 'beer'+i.toString()+'id'+j.toString(),
+                            // token: 'beer'+i.toString()+'id'+j.toString(),
+                            token: uuidv1(),
                             used: false
                         });
                 }
                 results[beers[i].id] = tokens;
                 let path = "./db/tokens/" + fname;
                 console.log("write file with tokens", path);
-                fs.writeFileSync(path, JSON.stringify(tokens), 'utf-8');
+
+                fs.writeFile(path, JSON.stringify(tokens), function(err) {
+                    if(err) {
+                        console.log("dddddddddddd")
+                        return console.log(err);
+                    }
+
+                    console.log("The file was saved!");
+                });
+
+                // fs.writeFileSync(path, JSON.stringify(tokens), 'utf-8');
             } catch (e) {
                 console.log("unable to write fiel", e);
             }
@@ -187,5 +199,43 @@ router.post('/vote/:beerId/:token', function(req, res, next) {
     });
 });
 
+router.post('/resetTheTokens', function(req, res, next) {
+    const fsex = require('fs-extra');
+    try {
+
+        let name = './db/resetTheTokens/' + Date.now();
+
+        fsex.copySync('./db/tokens', name + '/tokens');
+
+        fsex.copySync('./db/results', name + '/results');
+
+
+        // remove tokens from results
+        const results = fs.readdirSync('./db/results');
+        for (let i=0 ; i < results.length; i++) {
+            fs.unlinkSync('./db/results/'+results[i]);
+        }
+
+        // update tokens used=false
+        const tokens = fs.readdirSync('./db/tokens');
+        for (let i=0 ; i < tokens.length; i++) {
+            console.log(tokens[i])
+            let data = fs.readFileSync('./db/tokens/' + tokens[i], 'utf-8');
+            let all = JSON.parse(data);
+
+            for (let j=0; j < all.length; j++) {
+                all[j].used = false;
+            }
+            fs.writeFileSync('./db/tokens/' + tokens[i], JSON.stringify(all),'utf-8');
+        }
+
+
+        console.log('success!')
+    } catch (err) {
+        console.error(err)
+    }
+
+    res.send('ok')
+});
 
 module.exports = router;
