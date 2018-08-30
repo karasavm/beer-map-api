@@ -86,13 +86,13 @@ router.post('/generate', function(req, res, next) {
                             used: false
                         });
                 }
-                results[beers[i].id] = tokens;
+                beers[i]['tokens'] = tokens;
+                results.push(beers[i]);
                 let path = "./db/tokens/" + fname;
                 console.log("write file with tokens", path);
 
                 fs.writeFile(path, JSON.stringify(tokens), function(err) {
                     if(err) {
-                        console.log("dddddddddddd")
                         return console.log(err);
                     }
 
@@ -201,7 +201,8 @@ router.post('/vote/:beerId/:token', function(req, res, next) {
 
 router.post('/resetTheTokens', function(req, res, next) {
     const fsex = require('fs-extra');
-    try {
+    try
+    {
 
         let name = './db/resetTheTokens/' + Date.now();
 
@@ -222,15 +223,13 @@ router.post('/resetTheTokens', function(req, res, next) {
             console.log(tokens[i])
             let data = fs.readFileSync('./db/tokens/' + tokens[i], 'utf-8');
             let all = JSON.parse(data);
-
             for (let j=0; j < all.length; j++) {
                 all[j].used = false;
             }
+            // write the updated file
             fs.writeFileSync('./db/tokens/' + tokens[i], JSON.stringify(all),'utf-8');
         }
 
-
-        console.log('success!')
     } catch (err) {
         console.error(err)
     }
