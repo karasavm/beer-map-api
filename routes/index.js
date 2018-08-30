@@ -7,7 +7,7 @@ const path = require('path');
 const uuidv1 = require('uuid/v1');
 
 const fs = require('fs');
-
+const shortid = require('shortid');
 const TokenGenerator = require('uuid-token-generator');
 
 const tokgen2 = new TokenGenerator(256, TokenGenerator.BASE62);
@@ -82,7 +82,8 @@ router.post('/generate', function(req, res, next) {
                     tokens.push(
                         {
                             // token: 'beer'+i.toString()+'id'+j.toString(),
-                            token: uuidv1(),
+                            // token: uuidv1(),
+                            token: shortid.generate(),
                             used: false
                         });
                 }
@@ -95,7 +96,6 @@ router.post('/generate', function(req, res, next) {
                     if(err) {
                         return console.log(err);
                     }
-
                     console.log("The file was saved!");
                 });
 
