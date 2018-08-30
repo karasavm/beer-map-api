@@ -199,6 +199,7 @@ router.post('/vote/:beerId/:token', function(req, res, next) {
     });
 });
 
+// checked
 router.post('/resetTheTokens', function(req, res, next) {
     const fsex = require('fs-extra');
     try
@@ -237,4 +238,21 @@ router.post('/resetTheTokens', function(req, res, next) {
     res.send('ok')
 });
 
+router.post('/test', function(req, res, next) {
+
+    try {
+        let data = fs.readFileSync('./db/emails.json', 'utf-8');
+        let emails = JSON.parse(data);
+        console.log(emails)
+        data['ts'] = Date.now();
+        emails.push(req.body);
+        console.log(emails)
+        fs.writeFileSync('./db/emails.json', JSON.stringify(emails), 'utf-8');
+        res.json({test: 'ok'});
+
+    }catch (e) {
+        res.json({error: e});
+
+    }
+});
 module.exports = router;
