@@ -121,7 +121,7 @@ router.get('/tokens/:beerId', function (req, res, next) {
 // checked
 router.get('/checkToken/:beerId/:token', function(req, res, next) {
 
-
+    console.log('./db/tokens/'+req.params.beerId + '.json')
     fs.readFile('./db/tokens/'+req.params.beerId + '.json', 'utf8', function (err, data) {
 
         // wrong beer id
@@ -134,8 +134,10 @@ router.get('/checkToken/:beerId/:token', function(req, res, next) {
 
         let foundToken = false;
         for (let i=0; i < tokens.length; i++) {
+            console.log('for');
             let token = tokens[i];
             if (token.token === req.params.token) {
+                console.log('if1')
                 foundToken = true;
                 console.log(token.token);
                 if (token.used) {
